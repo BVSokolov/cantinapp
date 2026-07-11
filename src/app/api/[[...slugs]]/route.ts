@@ -9,4 +9,4 @@ const app = new Elysia({ prefix: API_PREFIX })
   })
 
 export const GET = app.fetch
-export const POST = app.post
+export const POST = app.fetch
