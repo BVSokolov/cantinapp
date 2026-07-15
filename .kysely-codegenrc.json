@@ -1,0 +1,6 @@
+{
+  "camelCase": true,
+  "dialect": "postgres",
+  "outFile": "./src/db/generated/kysely-codegen/db.d.ts",
+  "runtimeEnums": "pascal-case"
+}
