@@ -1,14 +1,17 @@
+import { NeonAuthUIProvider } from "@neondatabase/auth-ui";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
 import {
   createRootRouteWithContext,
   HeadContent,
+  Outlet,
   Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
+import { authClient } from "../lib/auth-client";
 import appCss from "../styles.css?url";
 
 interface MyRouterContext {
@@ -39,6 +42,22 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
   }),
   shellComponent: RootDocument,
+  component: () => (
+    <NeonAuthUIProvider authClient={authClient}>
+      <Outlet />
+      <TanStackDevtools
+        config={{
+          position: "bottom-right",
+        }}
+        plugins={[
+          {
+            name: "Tanstack Router",
+            render: <TanStackRouterDevtoolsPanel />,
+          },
+        ]}
+      />
+    </NeonAuthUIProvider>
+  ),
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
