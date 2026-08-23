@@ -45,17 +45,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 	component: () => (
 		<NeonAuthUIProvider authClient={authClient}>
 			<Outlet />
-			<TanStackDevtools
-				config={{
-					position: "bottom-right",
-				}}
-				plugins={[
-					{
-						name: "Tanstack Router",
-						render: <TanStackRouterDevtoolsPanel />,
-					},
-				]}
-			/>
 		</NeonAuthUIProvider>
 	),
 })
@@ -67,11 +56,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
 				<HeadContent />
 			</head>
-			<body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
+			{/*selection:bg-[rgba(79,184,178,0.24)]*/}
+			<body className="container font-sans">
 				<Header />
-				{children}
+				<main>{children}</main>
 				<Footer />
-				<TanStackDevtools
+				{/*<TanStackDevtools
 					config={{
 						position: "bottom-right",
 					}}
@@ -82,7 +72,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 						},
 						TanStackQueryDevtools,
 					]}
-				/>
+				/>*/}
 				<Scripts />
 			</body>
 		</html>
