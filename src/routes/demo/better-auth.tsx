@@ -25,7 +25,7 @@ function BetterAuthDemo() {
 
 	if (session?.user) {
 		return (
-			<main className="demo-page demo-center">
+			<div className="demo-page demo-center">
 				<section className="demo-panel w-full max-w-md space-y-6">
 					<div className="space-y-1.5">
 						<p className="island-kicker mb-2">Better Auth</p>
@@ -78,7 +78,7 @@ function BetterAuthDemo() {
 						.
 					</p>
 				</section>
-			</main>
+			</div>
 		)
 	}
 
@@ -114,7 +114,7 @@ function BetterAuthDemo() {
 	}
 
 	return (
-		<main className="demo-page demo-center">
+		<div className="demo-page demo-center">
 			<section className="demo-panel w-full max-w-md">
 				<p className="island-kicker mb-2">Better Auth</p>
 				<h1 className="demo-title">
@@ -230,6 +230,6 @@ function BetterAuthDemo() {
 					.
 				</p>
 			</section>
-		</main>
+		</div>
 	)
 }
