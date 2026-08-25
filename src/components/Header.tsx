@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router"
 import {
 	Drawer,
-	DrawerClose,
+	// DrawerClose,
 	DrawerContent,
-	DrawerDescription,
-	DrawerFooter,
+	// DrawerDescription,
+	// DrawerFooter,
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,

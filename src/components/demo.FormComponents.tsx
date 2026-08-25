@@ -1,14 +1,12 @@
 import { useStore } from '@tanstack/react-form'
-
-import { useFieldContext, useFormContext } from '#/hooks/demo.form-context'
-
 import { Button } from '#/components/ui/button'
 import { Input } from '#/components/ui/input'
-import { Textarea as ShadcnTextarea } from '#/components/ui/textarea'
+import { Label } from '#/components/ui/label'
 import * as ShadcnSelect from '#/components/ui/select'
 import { Slider as ShadcnSlider } from '#/components/ui/slider'
 import { Switch as ShadcnSwitch } from '#/components/ui/switch'
-import { Label } from '#/components/ui/label'
+import { Textarea as ShadcnTextarea } from '#/components/ui/textarea'
+import { useFieldContext, useFormContext } from '#/hooks/demo.form-context'
 
 export function SubscribeButton({ label }: { label: string }) {
   const form = useFormContext()
@@ -45,9 +43,11 @@ function ErrorMessages({
 export function TextField({
   label,
   placeholder,
+  children,
 }: {
   label: string
   placeholder?: string
+  children?: React.ReactNode
 }) {
   const field = useFieldContext<string>()
   const errors = useStore(field.store, (state) => state.meta.errors)
@@ -60,12 +60,15 @@ export function TextField({
       >
         {label}
       </Label>
-      <Input
-        value={field.state.value}
-        placeholder={placeholder}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-      />
+      <div className="flex items-center gap-2">
+        <Input
+          value={field.state.value}
+          placeholder={placeholder}
+          onBlur={field.handleBlur}
+          onChange={(e) => field.handleChange(e.target.value)}
+        />
+        {children}
+      </div>
       {field.state.meta.isTouched && <ErrorMessages errors={errors} />}
     </div>
   )
@@ -118,7 +121,7 @@ export function Select({
       <ShadcnSelect.Select
         name={field.name}
         value={field.state.value}
-        onValueChange={(value) => field.handleChange(value)}
+        onValueChange={(value) => field.handleChange(value ?? '')}
       >
         <ShadcnSelect.SelectTrigger className="w-full">
           <ShadcnSelect.SelectValue placeholder={placeholder} />

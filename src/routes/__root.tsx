@@ -1,5 +1,4 @@
 import { NeonAuthUIProvider } from "@neondatabase/auth-ui"
-import { TanStackDevtools } from "@tanstack/react-devtools"
 import type { QueryClient } from "@tanstack/react-query"
 import {
 	createRootRouteWithContext,
@@ -7,10 +6,8 @@ import {
 	Outlet,
 	Scripts,
 } from "@tanstack/react-router"
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
-import TanStackQueryDevtools from "../integrations/tanstack-query/devtools"
 import { authClient } from "../lib/auth-client"
 import appCss from "../styles.css?url"
 
@@ -31,7 +28,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "TanStack Start Starter",
+				title: "Can'tinapp",
 			},
 		],
 		links: [
