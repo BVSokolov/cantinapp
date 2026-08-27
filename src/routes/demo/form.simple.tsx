@@ -1,35 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { z } from 'zod'
+import { useState } from 'react'
+import { is } from 'zod/v4/locales'
 import { Button } from '#/components/ui/button'
+import { toast } from '#/components/ui/toast'
 import { useAppForm } from '#/hooks/demo.form'
+import { MealStation, mealSchema } from '#/lib/types/meal'
+import { addMeal } from '#/serverActions/mealActions'
 
 export const Route = createFileRoute('/demo/form/simple')({
   component: SimpleForm,
 })
 
-enum Station {
-  Discovery = 'Discovery',
-  Station1 = 'Station 1',
-  Station2 = 'Station 2',
-  Grill = 'Grill',
-}
-
-const mealSlopStationSchema = z.enum(Station)
-
-const mealSloptionSchema = z.object({
-  name: z.string().min(3, 'Name is required'),
-  station: mealSlopStationSchema,
-})
-
-const mealSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
-  // photo,
-  hating: z.string().regex(/^['1', '2', '3', '4', '5']+$/),
-  sloptions: z.array(mealSloptionSchema).min(1),
-  comment: z.string().min(0),
-})
-
 function SimpleForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const {
     AppField,
     AppForm,
@@ -41,23 +24,39 @@ function SimpleForm() {
     defaultValues: {
       title: '',
       hating: '1',
-      sloptions: [{ name: '', station: Station.Discovery }],
+      sloptions: [{ name: '', station: MealStation.Discovery }],
       comment: '',
     },
     validators: {
       onBlur: mealSchema,
     },
-    onSubmit: ({ value }) => {
+    onSubmit: async ({ value }) => {
       console.log(value)
-      // Show success message
-      alert('Form submitted successfully!')
+      if (isSubmitting) return
+      try {
+        setIsSubmitting(true)
+        await addMeal({ data: value })
+        toast.add({
+          title: 'Success',
+          description: 'Meal added successfully',
+          type: 'success',
+        })
+      } catch (error) {
+        toast.add({
+          title: 'Failed to add meal',
+          description: error instanceof Error ? error.message : String(error),
+          type: 'error',
+        })
+      } finally {
+        setIsSubmitting(false)
+      }
     },
   })
 
   const handleAdd = (index: number) => {
     insertFieldValue('sloptions', index, {
       name: '',
-      station: Station.Discovery,
+      station: MealStation.Discovery,
     })
   }
   const handleRemove = (index: number) => {
@@ -116,11 +115,17 @@ function SimpleForm() {
                               values={[
                                 {
                                   label: 'Discovery',
-                                  value: Station.Discovery,
+                                  value: MealStation.Discovery,
                                 },
-                                { label: 'Station 1', value: Station.Station1 },
-                                { label: 'Station 2', value: Station.Station2 },
-                                { label: 'Grill', value: Station.Grill },
+                                {
+                                  label: 'Station 1',
+                                  value: MealStation.Station1,
+                                },
+                                {
+                                  label: 'Station 2',
+                                  value: MealStation.Station2,
+                                },
+                                { label: 'Grill', value: MealStation.Grill },
                               ]}
                             />
                           )}
@@ -151,7 +156,9 @@ function SimpleForm() {
 
           <div className="flex justify-end">
             <AppForm>
-              <SubscribeButton label="Submit" />
+              <SubscribeButton
+                label={isSubmitting ? 'Submitting...' : 'Submit'}
+              />
             </AppForm>
           </div>
         </form>
