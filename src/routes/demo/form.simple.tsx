@@ -24,7 +24,7 @@ const mealSloptionSchema = z.object({
 const mealSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   // photo,
-  hating: z.number().min(1).max(5),
+  hating: z.string().regex(/^['1', '2', '3', '4', '5']+$/),
   sloptions: z.array(mealSloptionSchema).min(1),
   comment: z.string().min(0),
 })
@@ -40,7 +40,7 @@ function SimpleForm() {
   } = useAppForm({
     defaultValues: {
       title: '',
-      hating: 1,
+      hating: '1',
       sloptions: [{ name: '', station: Station.Discovery }],
       comment: '',
     },
@@ -80,11 +80,26 @@ function SimpleForm() {
           className="space-y-6"
         >
           <AppField name="title">
-            {(field) => <field.TextField label="Title" />}
-          </AppField>
-
-          <AppField name="hating">
-            {(field) => <field.TextField label="Hating" />}
+            {(field) => (
+              <field.TextField label="Title">
+                <AppField name="hating">
+                  {(field) => (
+                    <field.Select
+                      label="Hating"
+                      displayLabel
+                      minContent
+                      values={[
+                        { label: '🙂', value: '1' },
+                        { label: '🥲', value: '2' },
+                        { label: '😵‍💫', value: '3' },
+                        { label: '🤢', value: '4' },
+                        { label: '🤮', value: '5' },
+                      ]}
+                    />
+                  )}
+                </AppField>
+              </field.TextField>
+            )}
           </AppField>
 
           <AppField name="sloptions" mode="array">

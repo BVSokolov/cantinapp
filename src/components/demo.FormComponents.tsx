@@ -1,4 +1,4 @@
-import { useStore } from '@tanstack/react-form'
+import { useSelector } from '@tanstack/react-form'
 import { Button } from '#/components/ui/button'
 import { Input } from '#/components/ui/input'
 import { Label } from '#/components/ui/label'
@@ -7,6 +7,7 @@ import { Slider as ShadcnSlider } from '#/components/ui/slider'
 import { Switch as ShadcnSwitch } from '#/components/ui/switch'
 import { Textarea as ShadcnTextarea } from '#/components/ui/textarea'
 import { useFieldContext, useFormContext } from '#/hooks/demo.form-context'
+import { cn } from '#/lib/utils'
 
 export function SubscribeButton({ label }: { label: string }) {
   const form = useFormContext()
@@ -50,7 +51,7 @@ export function TextField({
   children?: React.ReactNode
 }) {
   const field = useFieldContext<string>()
-  const errors = useStore(field.store, (state) => state.meta.errors)
+  const errors = useSelector(field.store, (state) => state.meta.errors)
 
   return (
     <div>
@@ -82,7 +83,7 @@ export function TextArea({
   rows?: number
 }) {
   const field = useFieldContext<string>()
-  const errors = useStore(field.store, (state) => state.meta.errors)
+  const errors = useSelector(field.store, (state) => state.meta.errors)
 
   return (
     <div>
@@ -108,13 +109,17 @@ export function Select({
   label,
   values,
   placeholder,
+  displayLabel = false,
+  minContent = false,
 }: {
   label: string
   values: Array<{ label: string; value: string }>
   placeholder?: string
+  displayLabel?: boolean
+  minContent?: boolean
 }) {
   const field = useFieldContext<string>()
-  const errors = useStore(field.store, (state) => state.meta.errors)
+  const errors = useSelector(field.store, (state) => state.meta.errors)
 
   return (
     <div>
@@ -124,16 +129,34 @@ export function Select({
         onValueChange={(value) => field.handleChange(value ?? '')}
       >
         <ShadcnSelect.SelectTrigger className="w-full">
-          <ShadcnSelect.SelectValue placeholder={placeholder} />
+          <ShadcnSelect.SelectValue placeholder={placeholder}>
+            {displayLabel
+              ? values.find((value) => value.value === field.state.value)?.label
+              : field.state.value}
+          </ShadcnSelect.SelectValue>
         </ShadcnSelect.SelectTrigger>
-        <ShadcnSelect.SelectContent className="bg-background text-foreground">
-          <ShadcnSelect.SelectGroup>
-            <ShadcnSelect.SelectLabel>{label}</ShadcnSelect.SelectLabel>
+        <ShadcnSelect.SelectContent
+          className={cn(
+            minContent && 'min-w-min w-min',
+            'bg-background text-foreground',
+          )}
+        >
+          <ShadcnSelect.SelectGroup
+          // className={cn(minContent ? 'w-min min-w-min' : '')}
+          >
+            <ShadcnSelect.SelectLabel
+            // className={cn(minContent ? 'w-min min-w-min' : '')}
+            >
+              {label}
+            </ShadcnSelect.SelectLabel>
             {values.map((value) => (
               <ShadcnSelect.SelectItem
                 key={value.value}
                 value={value.value}
-                className="text-foreground"
+                className={cn(
+                  // minContent && 'w-min min-w-min',
+                  'text-foreground',
+                )}
               >
                 {value.label}
               </ShadcnSelect.SelectItem>
@@ -148,7 +171,7 @@ export function Select({
 
 export function Slider({ label }: { label: string }) {
   const field = useFieldContext<number>()
-  const errors = useStore(field.store, (state) => state.meta.errors)
+  const errors = useSelector(field.store, (state) => state.meta.errors)
 
   return (
     <div>
@@ -171,7 +194,7 @@ export function Slider({ label }: { label: string }) {
 
 export function Switch({ label }: { label: string }) {
   const field = useFieldContext<boolean>()
-  const errors = useStore(field.store, (state) => state.meta.errors)
+  const errors = useSelector(field.store, (state) => state.meta.errors)
 
   return (
     <div>
