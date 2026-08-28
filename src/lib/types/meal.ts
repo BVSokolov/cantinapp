@@ -1,11 +1,7 @@
 import { z } from 'zod'
+import { MealStation } from './generated/kysely-codegen/db'
 
-export enum MealStation {
-  Discovery = 'Discovery',
-  Station1 = 'Station 1',
-  Station2 = 'Station 2',
-  Grill = 'Grill',
-}
+export { MealStation as MealStationEnum }
 
 export const mealSlopStationSchema = z.enum(MealStation)
 

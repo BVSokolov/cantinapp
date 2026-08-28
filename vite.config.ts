@@ -1,27 +1,32 @@
-import tailwindcss from "@tailwindcss/vite";
-import { devtools } from "@tanstack/devtools-vite";
+import tailwindcss from '@tailwindcss/vite'
+import { devtools } from '@tanstack/devtools-vite'
 
-import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 
-import viteReact from "@vitejs/plugin-react";
-import { nitro } from "nitro/vite";
-import { defineConfig } from "vite";
-import neon from "./neon-vite-plugin.ts";
+import viteReact from '@vitejs/plugin-react'
+import { nitro } from 'nitro/vite'
+import { resolve } from 'path'
+import { defineConfig } from 'vite'
+import neon from './neon-vite-plugin.ts'
 
 const config = defineConfig({
-  resolve: { tsconfigPaths: true },
+  resolve: {
+    tsconfigPaths: true,
+  },
   plugins: [
     devtools(),
-    nitro({ rollupConfig: { external: [/^@sentry\//] } }),
+    nitro({
+      rollupConfig: { external: [/^@sentry\//] },
+    }),
     neon,
     tailwindcss(),
     tanstackStart({
       router: {
-        routesDirectory: "routes", // optional, this is the default
+        routesDirectory: 'routes', // optional, this is the default
       },
     }),
     viteReact(),
   ],
-});
+})
 
-export default config;
+export default config

@@ -5,6 +5,13 @@
 
 import type { ColumnType } from "kysely";
 
+export enum MealStation {
+  Discovery = "Discovery",
+  Grill = "Grill",
+  Station1 = "Station 1",
+  Station2 = "Station 2",
+}
+
 export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
   : ColumnType<T, T | undefined, T>;
@@ -22,6 +29,19 @@ export type JsonPrimitive = boolean | number | string | null;
 export type JsonValue = JsonArray | JsonObject | JsonPrimitive;
 
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
+
+export interface Meal {
+  hating: string;
+  id: Generated<number>;
+  title: string;
+}
+
+export interface MealSloption {
+  id: Generated<number>;
+  mealId: number;
+  name: string;
+  station: MealStation;
+}
 
 export interface NeonAuthAccount {
   accessToken: string | null;
@@ -127,6 +147,8 @@ export interface NeonAuthVerification {
 }
 
 export interface DB {
+  meal: Meal;
+  mealSloption: MealSloption;
   "neonAuth.account": NeonAuthAccount;
   "neonAuth.invitation": NeonAuthInvitation;
   "neonAuth.jwks": NeonAuthJwks;

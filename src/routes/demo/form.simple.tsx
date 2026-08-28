@@ -1,10 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
-import { is } from 'zod/v4/locales'
 import { Button } from '#/components/ui/button'
 import { toast } from '#/components/ui/toast'
 import { useAppForm } from '#/hooks/demo.form'
-import { MealStation, mealSchema } from '#/lib/types/meal'
+import { MealStationEnum, mealSchema } from '#/lib/types/meal'
 import { addMeal } from '#/serverActions/mealActions'
 
 export const Route = createFileRoute('/demo/form/simple')({
@@ -24,7 +23,7 @@ function SimpleForm() {
     defaultValues: {
       title: '',
       hating: '1',
-      sloptions: [{ name: '', station: MealStation.Discovery }],
+      sloptions: [{ name: '', station: MealStationEnum.Discovery }],
       comment: '',
     },
     validators: {
@@ -56,7 +55,7 @@ function SimpleForm() {
   const handleAdd = (index: number) => {
     insertFieldValue('sloptions', index, {
       name: '',
-      station: MealStation.Discovery,
+      station: MealStationEnum.Discovery,
     })
   }
   const handleRemove = (index: number) => {
@@ -115,17 +114,20 @@ function SimpleForm() {
                               values={[
                                 {
                                   label: 'Discovery',
-                                  value: MealStation.Discovery,
+                                  value: MealStationEnum.Discovery,
                                 },
                                 {
                                   label: 'Station 1',
-                                  value: MealStation.Station1,
+                                  value: MealStationEnum.Station1,
                                 },
                                 {
                                   label: 'Station 2',
-                                  value: MealStation.Station2,
+                                  value: MealStationEnum.Station2,
                                 },
-                                { label: 'Grill', value: MealStation.Grill },
+                                {
+                                  label: 'Grill',
+                                  value: MealStationEnum.Grill,
+                                },
                               ]}
                             />
                           )}

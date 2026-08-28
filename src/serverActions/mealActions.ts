@@ -1,4 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
+import { db } from '#/db'
 import { type Meal, mealSchema } from '#/lib/types/meal'
 
 export const getMeals = createServerFn({ method: 'GET' }).handler(async () => {
@@ -17,6 +18,9 @@ export const addMeal = createServerFn({ method: 'POST' })
   .handler(async ({ data }) => {
     console.log('addMeal ', data)
     try {
+      await db.transaction().execute(async (trx) => {
+        await trx.insertInto('meal').values(data).execute()
+      })
       return {}
     } catch (error) {
       throw new Error('Server error', { cause: error })

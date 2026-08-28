@@ -5,6 +5,6 @@ export default defineConfig({
   kysely: db,
   migrations: {
     getMigrationPrefix: getKnexTimestampPrefix,
-    migrationFolder: "../kysely/migrations",
+    migrationFolder: "../db/",
   },
 })
