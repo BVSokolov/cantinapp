@@ -1,13 +1,11 @@
-import { neon } from "@neondatabase/serverless"
+import 'dotenv/config'
+import { neon } from '@neondatabase/serverless'
+import { Kysely } from 'kysely'
+import { NeonDialect } from 'kysely-neon'
+import type { DB } from './generated/kysely-codegen/db.d.ts'
 
-let client: ReturnType<typeof neon>
-
-export async function getClient() {
-	if (!process.env.DATABASE_URL) {
-		return undefined
-	}
-	if (!client) {
-		client = await neon(process.env.DATABASE_URL!)
-	}
-	return client
-}
+export const db = new Kysely<DB>({
+  dialect: new NeonDialect({
+    neon: neon(process.env.DATABASE_URL!),
+  }),
+})
