@@ -14,7 +14,6 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AccountPathnameRouteImport } from './routes/account.$pathname'
 import { Route as AuthPathnameRouteImport } from './routes/auth.$pathname'
 import { Route as DemoBetterAuthRouteImport } from './routes/demo/better-auth'
-import { Route as DemoNeonRouteImport } from './routes/demo/neon'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as DemoFormAddressRouteImport } from './routes/demo/form.address'
@@ -45,11 +44,6 @@ const DemoBetterAuthRoute = DemoBetterAuthRouteImport.update({
   path: '/demo/better-auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoNeonRoute = DemoNeonRouteImport.update({
-  id: '/demo/neon',
-  path: '/demo/neon',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/demo/tanstack-query',
   path: '/demo/tanstack-query',
@@ -77,7 +71,6 @@ export interface FileRoutesByFullPath {
   '/account/$pathname': typeof AccountPathnameRoute
   '/auth/$pathname': typeof AuthPathnameRoute
   '/demo/better-auth': typeof DemoBetterAuthRoute
-  '/demo/neon': typeof DemoNeonRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/form/address': typeof DemoFormAddressRoute
@@ -89,7 +82,6 @@ export interface FileRoutesByTo {
   '/account/$pathname': typeof AccountPathnameRoute
   '/auth/$pathname': typeof AuthPathnameRoute
   '/demo/better-auth': typeof DemoBetterAuthRoute
-  '/demo/neon': typeof DemoNeonRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/form/address': typeof DemoFormAddressRoute
@@ -102,7 +94,6 @@ export interface FileRoutesById {
   '/account/$pathname': typeof AccountPathnameRoute
   '/auth/$pathname': typeof AuthPathnameRoute
   '/demo/better-auth': typeof DemoBetterAuthRoute
-  '/demo/neon': typeof DemoNeonRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/form/address': typeof DemoFormAddressRoute
@@ -116,7 +107,6 @@ export interface FileRouteTypes {
     | '/account/$pathname'
     | '/auth/$pathname'
     | '/demo/better-auth'
-    | '/demo/neon'
     | '/demo/tanstack-query'
     | '/api/auth/$'
     | '/demo/form/address'
@@ -128,7 +118,6 @@ export interface FileRouteTypes {
     | '/account/$pathname'
     | '/auth/$pathname'
     | '/demo/better-auth'
-    | '/demo/neon'
     | '/demo/tanstack-query'
     | '/api/auth/$'
     | '/demo/form/address'
@@ -140,7 +129,6 @@ export interface FileRouteTypes {
     | '/account/$pathname'
     | '/auth/$pathname'
     | '/demo/better-auth'
-    | '/demo/neon'
     | '/demo/tanstack-query'
     | '/api/auth/$'
     | '/demo/form/address'
@@ -153,7 +141,6 @@ export interface RootRouteChildren {
   AccountPathnameRoute: typeof AccountPathnameRoute
   AuthPathnameRoute: typeof AuthPathnameRoute
   DemoBetterAuthRoute: typeof DemoBetterAuthRoute
-  DemoNeonRoute: typeof DemoNeonRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   DemoFormAddressRoute: typeof DemoFormAddressRoute
@@ -197,13 +184,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoBetterAuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/neon': {
-      id: '/demo/neon'
-      path: '/demo/neon'
-      fullPath: '/demo/neon'
-      preLoaderRoute: typeof DemoNeonRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
       path: '/demo/tanstack-query'
@@ -241,7 +221,6 @@ const rootRouteChildren: RootRouteChildren = {
   AccountPathnameRoute: AccountPathnameRoute,
   AuthPathnameRoute: AuthPathnameRoute,
   DemoBetterAuthRoute: DemoBetterAuthRoute,
-  DemoNeonRoute: DemoNeonRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   DemoFormAddressRoute: DemoFormAddressRoute,

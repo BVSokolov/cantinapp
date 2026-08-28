@@ -31,6 +31,7 @@ export type JsonValue = JsonArray | JsonObject | JsonPrimitive;
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export interface Meal {
+  comment: string | null;
   hating: string;
   id: Generated<number>;
   title: string;

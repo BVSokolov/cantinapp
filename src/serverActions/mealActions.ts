@@ -19,10 +19,17 @@ export const addMeal = createServerFn({ method: 'POST' })
     console.log('addMeal ', data)
     try {
       await db.transaction().execute(async (trx) => {
-        await trx.insertInto('meal').values(data).execute()
+        trx.insertInto('meal').values({
+          title: data.title,
+          hating: data.hating,
+          comment: data.comment,
+        })
       })
       return {}
     } catch (error) {
-      throw new Error('Server error', { cause: error })
+      console.error(error)
+      throw new Error('Server error', {
+        cause: error instanceof Error ? error.message : String(error),
+      })
     }
   })

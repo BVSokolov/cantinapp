@@ -8,6 +8,7 @@ export async function up(db: Kysely<any>): Promise<void> {
       .addColumn('id', 'serial', (col) => col.primaryKey())
       .addColumn('title', 'text', (col) => col.notNull())
       .addColumn('hating', 'varchar', (col) => col.notNull())
+      .addColumn('comment', 'text')
       .execute()
 
     console.log('Creating MealStation type...')
