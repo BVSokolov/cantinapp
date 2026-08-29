@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import {
   Item,
   ItemContent,
@@ -19,6 +19,7 @@ export const Route = createFileRoute('/meal/browse')({
 
 function RouteComponent() {
   const meals = Route.useLoaderData()
+  const navigate = useNavigate()
 
   return (
     <div>
@@ -31,7 +32,11 @@ function RouteComponent() {
         </div>
         <ItemGroup className="grid grid-cols-2 gap-4 md:grid-cols-5">
           {meals.map((meal) => (
-            <Item key={meal.id} variant="muted">
+            <Item
+              key={meal.id}
+              variant="muted"
+              onClick={() => navigate({ to: `/meal/${meal.id}` })}
+            >
               <ItemHeader className="self-baseline">
                 <img
                   src=""
@@ -43,9 +48,7 @@ function RouteComponent() {
               </ItemHeader>
               {/*fix the height, it's not correct*/}
               <ItemContent className="self-baseline h-full">
-                <ItemTitle>
-                  <Link to={`/meal/${meal.id}`}>{meal.title}</Link>
-                </ItemTitle>
+                <ItemTitle>{meal.title}</ItemTitle>
                 <ItemDescription>{meal.comment}</ItemDescription>
                 <ItemDescription>
                   {HATING_SYMBOLS[Number(meal.hating) - 1]}
