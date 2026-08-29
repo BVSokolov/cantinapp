@@ -15,6 +15,8 @@ import { Route as AccountPathnameRouteImport } from './routes/account.$pathname'
 import { Route as AuthPathnameRouteImport } from './routes/auth.$pathname'
 import { Route as DemoBetterAuthRouteImport } from './routes/demo/better-auth'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
+import { Route as MealMealIdRouteImport } from './routes/meal/$mealId'
+import { Route as MealBrowseRouteImport } from './routes/meal/browse'
 import { Route as MealCreateRouteImport } from './routes/meal/create'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as DemoFormAddressRouteImport } from './routes/demo/form.address'
@@ -50,6 +52,16 @@ const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   path: '/demo/tanstack-query',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MealMealIdRoute = MealMealIdRouteImport.update({
+  id: '/meal/$mealId',
+  path: '/meal/$mealId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MealBrowseRoute = MealBrowseRouteImport.update({
+  id: '/meal/browse',
+  path: '/meal/browse',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MealCreateRoute = MealCreateRouteImport.update({
   id: '/meal/create',
   path: '/meal/create',
@@ -78,6 +90,8 @@ export interface FileRoutesByFullPath {
   '/auth/$pathname': typeof AuthPathnameRoute
   '/demo/better-auth': typeof DemoBetterAuthRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/meal/$mealId': typeof MealMealIdRoute
+  '/meal/browse': typeof MealBrowseRoute
   '/meal/create': typeof MealCreateRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/form/address': typeof DemoFormAddressRoute
@@ -90,6 +104,8 @@ export interface FileRoutesByTo {
   '/auth/$pathname': typeof AuthPathnameRoute
   '/demo/better-auth': typeof DemoBetterAuthRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/meal/$mealId': typeof MealMealIdRoute
+  '/meal/browse': typeof MealBrowseRoute
   '/meal/create': typeof MealCreateRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/form/address': typeof DemoFormAddressRoute
@@ -103,6 +119,8 @@ export interface FileRoutesById {
   '/auth/$pathname': typeof AuthPathnameRoute
   '/demo/better-auth': typeof DemoBetterAuthRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/meal/$mealId': typeof MealMealIdRoute
+  '/meal/browse': typeof MealBrowseRoute
   '/meal/create': typeof MealCreateRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/form/address': typeof DemoFormAddressRoute
@@ -117,6 +135,8 @@ export interface FileRouteTypes {
     | '/auth/$pathname'
     | '/demo/better-auth'
     | '/demo/tanstack-query'
+    | '/meal/$mealId'
+    | '/meal/browse'
     | '/meal/create'
     | '/api/auth/$'
     | '/demo/form/address'
@@ -129,6 +149,8 @@ export interface FileRouteTypes {
     | '/auth/$pathname'
     | '/demo/better-auth'
     | '/demo/tanstack-query'
+    | '/meal/$mealId'
+    | '/meal/browse'
     | '/meal/create'
     | '/api/auth/$'
     | '/demo/form/address'
@@ -141,6 +163,8 @@ export interface FileRouteTypes {
     | '/auth/$pathname'
     | '/demo/better-auth'
     | '/demo/tanstack-query'
+    | '/meal/$mealId'
+    | '/meal/browse'
     | '/meal/create'
     | '/api/auth/$'
     | '/demo/form/address'
@@ -154,6 +178,8 @@ export interface RootRouteChildren {
   AuthPathnameRoute: typeof AuthPathnameRoute
   DemoBetterAuthRoute: typeof DemoBetterAuthRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  MealMealIdRoute: typeof MealMealIdRoute
+  MealBrowseRoute: typeof MealBrowseRoute
   MealCreateRoute: typeof MealCreateRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   DemoFormAddressRoute: typeof DemoFormAddressRoute
@@ -204,6 +230,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoTanstackQueryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/meal/$mealId': {
+      id: '/meal/$mealId'
+      path: '/meal/$mealId'
+      fullPath: '/meal/$mealId'
+      preLoaderRoute: typeof MealMealIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meal/browse': {
+      id: '/meal/browse'
+      path: '/meal/browse'
+      fullPath: '/meal/browse'
+      preLoaderRoute: typeof MealBrowseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/meal/create': {
       id: '/meal/create'
       path: '/meal/create'
@@ -242,6 +282,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthPathnameRoute: AuthPathnameRoute,
   DemoBetterAuthRoute: DemoBetterAuthRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  MealMealIdRoute: MealMealIdRoute,
+  MealBrowseRoute: MealBrowseRoute,
   MealCreateRoute: MealCreateRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   DemoFormAddressRoute: DemoFormAddressRoute,

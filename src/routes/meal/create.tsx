@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Button } from '#/components/ui/button'
 import { toast } from '#/components/ui/toast'
 import { useAppForm } from '#/hooks/demo.form'
+import { HATING_SYMBOLS } from '#/lib/constants'
 import { MealStationEnum, mealSchema } from '#/lib/types/meal'
 import { addMeal } from '#/serverActions/mealActions'
 
@@ -86,13 +87,10 @@ function RouteComponent() {
                       label="Hating"
                       displayLabel
                       minContent
-                      values={[
-                        { label: '🙂', value: '1' },
-                        { label: '🥲', value: '2' },
-                        { label: '😵‍💫', value: '3' },
-                        { label: '🤢', value: '4' },
-                        { label: '🤮', value: '5' },
-                      ]}
+                      values={HATING_SYMBOLS.map((symbol, index) => ({
+                        label: symbol,
+                        value: (index + 1).toString(),
+                      }))}
                     />
                   )}
                 </AppField>

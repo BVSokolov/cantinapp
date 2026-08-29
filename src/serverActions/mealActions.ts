@@ -1,14 +1,40 @@
 import { createServerFn } from '@tanstack/react-start'
+import type { Insertable } from 'kysely'
 import { db } from '#/db'
-import { type Meal, mealSchema } from '#/lib/types/meal'
+import type { Meal } from '#/lib/types/generated/kysely-codegen/db'
+import { mealSchema } from '#/lib/types/meal'
 
 export const getMeals = createServerFn({ method: 'GET' }).handler(async () => {
   console.log('getMeals')
-  return {}
+  try {
+    const meals = await db.selectFrom('meal').selectAll().execute()
+    return meals
+  } catch (error) {
+    console.error(error)
+    throw new Error('Server error', {
+      cause: error instanceof Error ? error.message : String(error),
+    })
+  }
 })
 
+export const getMeal = createServerFn({ method: 'GET' })
+  .validator((params: { mealId: string }) => params)
+  .handler(async ({ data }) => {
+    const { mealId } = data
+    console.log('getMeal', mealId)
+
+    const meal = await db
+      .selectFrom('meal')
+      .selectAll()
+      .where('id', '=', Number(mealId))
+      .executeTakeFirstOrThrow()
+
+    // TODO need to get the sloptions as well
+    return meal
+  })
+
 export const addMeal = createServerFn({ method: 'POST' })
-  .validator((data: Meal) => {
+  .validator((data: Insertable<Meal>) => {
     const formData = mealSchema.safeParse(data)
     if (!formData.success) {
       throw new Error('Invalid meal data')

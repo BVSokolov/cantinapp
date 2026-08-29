@@ -23,17 +23,17 @@ export const NavPanel = () => {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Navigation</DrawerTitle>
+          <DrawerTitle className="text-2xl">Navigation</DrawerTitle>
           {/*<DrawerDescription>
 									This action cannot be undone.
 								</DrawerDescription>*/}
         </DrawerHeader>
         <div className="p-4">
           {/* Content here */}
-          <div className="flex flex-col w-full flex-wrap items-center gap-x-4 gap-y-1 pb-1 text-sm font-semibold sm:order-none sm:w-auto sm:flex-nowrap sm:pb-0">
+          <div className="flex flex-col w-full flex-wrap items-start gap-y-3 text-sm font-semibold">
             <Link
               to="/"
-              className="nav-link"
+              className="nav-link ml-2"
               activeProps={{ className: 'nav-link is-active' }}
               onClick={onClickLink}
             >
@@ -41,21 +41,31 @@ export const NavPanel = () => {
             </Link>
             <Link
               to="/about"
-              className="nav-link"
+              className="nav-link ml-2"
               activeProps={{ className: 'nav-link is-active' }}
               onClick={onClickLink}
             >
               About
             </Link>
+            <p className="w-full text-xl">Meal</p>
             <Link
               to="/meal/create"
-              className="nav-link"
+              className="nav-link ml-2"
               activeProps={{ className: 'nav-link is-active' }}
               onClick={onClickLink}
             >
               Create Meal
             </Link>
-            <div className="relative w-full sm:w-auto">
+            <Link
+              to="/meal/browse"
+              className="nav-link ml-2"
+              activeProps={{ className: 'nav-link is-active' }}
+              onClick={onClickLink}
+            >
+              Browse Meals
+            </Link>
+
+            {/*<div className="relative w-full sm:w-auto">
               <p className="nav-link list-none cursor-pointer">Demos</p>
               <a
                 href="/demo/better-auth"
@@ -81,7 +91,7 @@ export const NavPanel = () => {
               >
                 Address Form
               </a>
-            </div>
+            </div>*/}
           </div>
         </div>
         {/*<DrawerFooter>

@@ -18,4 +18,4 @@ export const mealSchema = z.object({
   comment: z.string().min(0),
 })
 
-export type Meal = z.infer<typeof mealSchema>
+// export type Meal = z.infer<typeof mealSchema>
