@@ -1,12 +1,17 @@
 import 'dotenv/config'
-import { neon } from '@neondatabase/serverless'
-import { CamelCasePlugin, Kysely } from 'kysely'
-import { NeonDialect } from 'kysely-neon'
+import { neonConfig, Pool } from '@neondatabase/serverless'
+import { CamelCasePlugin, Kysely, PostgresDialect } from 'kysely'
+import type { Pool as PgPool } from 'pg'
+import { WebSocket } from 'ws'
 import type { DB } from './lib/types/generated/kysely-codegen/db.d.ts'
 
+neonConfig.webSocketConstructor = WebSocket
+
 export const db = new Kysely<DB>({
-  dialect: new NeonDialect({
-    neon: neon(process.env.DATABASE_URL!),
+  dialect: new PostgresDialect({
+    pool: new Pool({
+      connectionString: process.env.DATABASE_URL!,
+    }) as unknown as PgPool,
   }),
   plugins: [new CamelCasePlugin()],
 })

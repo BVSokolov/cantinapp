@@ -19,13 +19,28 @@ export const addMeal = createServerFn({ method: 'POST' })
     console.log('addMeal ', data)
     try {
       await db.transaction().execute(async (trx) => {
-        trx.insertInto('meal').values({
-          title: data.title,
-          hating: data.hating,
-          comment: data.comment,
+        const { id: mealId } = await trx
+          .insertInto('meal')
+          .values({
+            title: data.title,
+            hating: data.hating,
+            comment: data.comment,
+          })
+          .returning('id')
+          .executeTakeFirstOrThrow()
+
+        data.sloptions.forEach(async (sloption) => {
+          await trx
+            .insertInto('mealSloption')
+            .values({
+              mealId,
+              ...sloption,
+            })
+            .returning('id')
+            .executeTakeFirstOrThrow()
         })
       })
-      return {}
+      return { data: 'Success' }
     } catch (error) {
       console.error(error)
       throw new Error('Server error', {
