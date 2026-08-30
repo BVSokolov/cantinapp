@@ -7,11 +7,15 @@ import type { DB } from './lib/types/generated/kysely-codegen/db.d.ts'
 
 neonConfig.webSocketConstructor = WebSocket
 
-export const db = new Kysely<DB>({
-  dialect: new PostgresDialect({
-    pool: new Pool({
-      connectionString: process.env.DATABASE_URL!,
-    }) as unknown as PgPool,
-  }),
-  plugins: [new CamelCasePlugin()],
-})
+export const createClient = (includePlugin = true) => {
+  return new Kysely<DB>({
+    dialect: new PostgresDialect({
+      pool: new Pool({
+        connectionString: process.env.DATABASE_URL!,
+      }) as unknown as PgPool,
+    }),
+    plugins: includePlugin ? [new CamelCasePlugin()] : [],
+  })
+}
+
+export const db = createClient()

@@ -1,21 +1,26 @@
 import { createServerFn } from '@tanstack/react-start'
+import { setResponseStatus } from '@tanstack/react-start/server'
 import type { Insertable } from 'kysely'
 import { db } from '#/db'
+import { ensureSession } from '#/lib/auth.functions'
 import type { Meal } from '#/lib/types/generated/kysely-codegen/db'
 import { mealSchema } from '#/lib/types/meal'
 
-export const getMeals = createServerFn({ method: 'GET' }).handler(async () => {
-  console.log('getMeals')
-  try {
-    const meals = await db.selectFrom('meal').selectAll().execute()
-    return meals
-  } catch (error) {
-    console.error(error)
-    throw new Error('Server error', {
-      cause: error instanceof Error ? error.message : String(error),
-    })
-  }
-})
+export const getMeals = createServerFn({ method: 'GET' }).handler(
+  async ({}) => {
+    const session = await ensureSession()
+    console.log('getMeals', session)
+    try {
+      const meals = await db.selectFrom('meal').selectAll().execute()
+      return meals
+    } catch (error) {
+      console.error(error)
+      throw new Error('Server error', {
+        cause: error instanceof Error ? error.message : String(error),
+      })
+    }
+  },
+)
 
 export const getMeal = createServerFn({ method: 'GET' })
   .validator((params: { mealId: string }) => params)
@@ -42,7 +47,8 @@ export const addMeal = createServerFn({ method: 'POST' })
     return formData.data
   })
   .handler(async ({ data }) => {
-    console.log('addMeal ', data)
+    const session = await requireSession()
+    console.log('addMeal ', data, session)
     try {
       await db.transaction().execute(async (trx) => {
         const { id: mealId } = await trx
@@ -66,6 +72,7 @@ export const addMeal = createServerFn({ method: 'POST' })
             .executeTakeFirstOrThrow()
         })
       })
+      setResponseStatus(200)
       return { data: 'Success' }
     } catch (error) {
       console.error(error)
@@ -74,3 +81,6 @@ export const addMeal = createServerFn({ method: 'POST' })
       })
     }
   })
+function requireSession() {
+  throw new Error('Function not implemented.')
+}
